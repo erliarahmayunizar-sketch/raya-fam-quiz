@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kamu Tipe Karakter Siapa di Raya Family?</title>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #001f3f, #3a6ea5, #87ceeb);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1em;
+      max-width: 400px;
+      margin: 0 20px 20px;
+      line-height: 1.5;
+    }
+
+    button {
+      background-color: #ffffff;
+      color: #001f3f;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #f1f1f1;
+      transform: scale(1.05);
+    }
+
+    #quiz-section button {
+      margin: 8px;
+      min-width: 180px;
+    }
+
+    #result-text {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Kamu Tipe Karakter Siapa di Raya Family?</h1>
+  <p>✨ Kuis ini cuma buat seru-seruan aja, nggak 100% akurat dengan kepribadian mereka di dunia nyata.  
+  Jadi, jawab sejujur dan sesantai mungkin~ ✨</p>
+
+  <button id="start-btn">Mulai</button>
+
+  <div id="quiz-section" style="display:none;">
+    <h2 id="question-text">Pertanyaan 1</h2>
+    <button id="btnA" onclick="nextQuestion('a')">A</button>
+    <button id="btnB" onclick="nextQuestion('b')">B</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "Kalau ada teman baru di grup kalian, kamu tipe yang...",
+        a: "Langsung ngajak ngobrol duluan",
+        b: "Lihat-lihat dulu, baru nimbrung"
+      },
+      {
+        text: "Waktu ada kerja kelompok, kamu lebih suka...",
+        a: "Ngatur dan bagi-bagi tugas biar rapi",
+        b: "Jalanin aja, yang penting selesai bareng"
+      },
+      {
+        text: "Kalau ada masalah, biasanya kamu...",
+        a: "Cerita ke teman terdekat biar lega",
+        b: "Pikir sendiri dulu sebelum cerita"
+      },
+      {
+        text: "Kalau ngeliat seseorang diem tapi perhatian, kamu...",
+        a: "Langsung nyamperin, penasaran aja!",
+        b: "Cuma senyum aja, biar waktu yang jawab"
+      },
+      {
+        text: "Kalau lagi bosen, kamu lebih pilih...",
+        a: "Ngobrol sama temen atau scroll sosmed",
+        b: "Dengerin lagu atau nonton sesuatu sendiri"
+      },
+      {
+        text: "Kamu paling semangat kalau...",
+        a: "Bisa bantu orang lain",
+        b: "Bisa nyelesain sesuatu sendirian dengan baik"
+      },
+      {
+        text: "Kalau disuruh presentasi, kamu...",
+        a: "Langsung siap dan percaya diri",
+        b: "Deg-degan tapi tetep mau coba"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let scoreA = 0;
+    let scoreB = 0;
+
+    const questionText = document.getElementById("question-text");
+    const quizSection = document.getElementById("quiz-section");
+    const startButton = document.getElementById("start-btn");
+
+    startButton.addEventListener("click", () => {
+      startButton.style.display = "none";
+      document.querySelector("p").style.display = "none";
+      quizSection.style.display = "block";
+      loadQuestion();
+    });
+
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionText.textContent = q.text;
+      document.getElementById("btnA").textContent = q.a;
+      document.getElementById("btnB").textContent = q.b;
+    }
+
+    function nextQuestion(answer) {
+      if (answer === 'a') scoreA++;
+      else scoreB++;
+
+      currentQuestion++;
+
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      quizSection.innerHTML = `
+        <h2>✨ Hasil Kuis Kamu ✨</h2>
+        <img id="result-image" src="" alt="Foto Hasil" width="220" style="border-radius: 15px; margin: 10px 0;">
+        <p id="result-text"></p>
+        <button onclick="location.reload()">Main Lagi 🔁</button>
+      `;
+
+      let resultText = "";
+      let resultImage = document.getElementById("result-image");
+
+      if (scoreA > scoreB) {
+        resultText = "Kamu mirip <b>Haikal</b>! 🔵<br>Karaktermu hangat, berani, dan suka memimpin, tapi tetap rendah hati.";
+        resultImage.src = "haikal.jpg";
+      } else if (scoreB > scoreA) {
+        resultText = "Kamu mirip <b>Nerya</b> atau <b>Elsa</b>! 💙<br>Kamu tenang, cerdas, dan selalu punya cara sendiri buat bikin suasana nyaman.";
+        resultImage.src = "nerya.jpg";
+      } else {
+        resultText = "Kamu punya keseimbangan unik kayak <b>Haikal</b> dan <b>Nerya</b> sekaligus!";
+        resultImage.src = "rafael.jpg";
+      }
+
+      document.getElementById("result-text").innerHTML = resultText;
+    }
+  </script>
+</body>
+</html>
